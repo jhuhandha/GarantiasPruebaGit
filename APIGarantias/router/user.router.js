@@ -1,7 +1,18 @@
 const express = require('express');
-const {list} = require('./../controller/user.controller');
+const userValidation = require('./../validation/user.validation');
+const {auth} = require('./../middleware/auth');
+const {
+  list,
+  create,
+  login,
+  logout,
+} = require('./../controller/user.controller');
+
 const router = express.Router();
 
-router.get('/user', list);
+router.get('/user', auth, list);
+router.post('/user', [...userValidation()], create);
+router.post('/user/login', [...userValidation()], login);
+router.get('/user/logout', auth, logout);
 
 module.exports = router;

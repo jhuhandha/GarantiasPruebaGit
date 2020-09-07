@@ -32,15 +32,15 @@ app.get('/', (req, res) => {
 });
 app.use(require('./router'));
 
-sequelize.sync({force: true}).then(() => {
-  User.bulkCreate([
-    {
-      name: 'Juan',
-      username: 'juanda',
-      password: bcrypt.hashSync('123456', 10),
-      role: 'ADMIN',
-    },
-  ]);
+sequelize.sync().then(() => {
+  // User.bulkCreate([
+  //   {
+  //     name: 'Juan',
+  //     username: 'juanda',
+  //     password: bcrypt.hashSync('123456', 10),
+  //     role: 'ADMIN',
+  //   },
+  // ]);
 
   app.listen(process.env.PORT, () => {
     console.log(`Corriendo por el puerto ${process.env.PORT}`);
