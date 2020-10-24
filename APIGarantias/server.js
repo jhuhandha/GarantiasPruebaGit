@@ -3,10 +3,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const expressFileUpload = require('express-fileupload');
 const bcrypt = require('bcrypt');
+const http = require('http');
+const io = require('socket.io');
 
 const {sequelize, User} = require('./model');
 
 const app = express();
+const _http = http.createServer(app);
+const _io = io(_http);
 
 app.use(expressFileUpload());
 
@@ -32,6 +36,12 @@ app.get('/', (req, res) => {
 });
 app.use(require('./router'));
 
+_io.on('connection', (socket) => {
+  socket.on('mouse', (data) => {
+    socket.broadcast.emit('painter', data);
+  });
+});
+
 sequelize.sync().then(() => {
   // User.bulkCreate([
   //   {
@@ -42,7 +52,7 @@ sequelize.sync().then(() => {
   //   },
   // ]);
 
-  app.listen(process.env.PORT, () => {
+  _http.listen(process.env.PORT, () => {
     console.log(`Corriendo por el puerto ${process.env.PORT}`);
   });
 });

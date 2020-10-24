@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+}
+.top-nav {
+  display: flex;
+  flex-direction: row;
+  background-color: #ffff77;
+  border: 1px solid darkorange;
+  position: absolute;
+  width: 100%;
+}
+.top-nav {
+  margin: 5px;
+}
+#paint {
+  display: block;
+}
